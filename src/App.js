@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect} from "react";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import PostList from "./PostList";
+import PostDetail from "./PostDetail";
+import Login from "./Login";
+import NewPost from "./NewPost";
 
 function App() {
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    const jwtToken = localStorage.getItem("token");
+    setToken(jwtToken);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <BrowserRouter>
+        <div className="App">
+          <h1>Список постов</h1>
+          <Routes>
+            <Route path="/" element={<PostList />} />
+              <Route path="/login" element={<Login />} />
+            <Route path="/newpost" element={<NewPost token={token}/>}/>
+            <Route path="/post/:id" element={<PostDetail />} />
+          </Routes>
+        </div>
+          </BrowserRouter>
   );
 }
 
