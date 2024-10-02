@@ -9,6 +9,7 @@ function PostList() {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
+
         const fetchPosts = async () => {
             try {
                 const response = await axios.get(`http://newscrypt.online/wp-json/wp/v2/posts`);
@@ -16,7 +17,7 @@ function PostList() {
             } catch (error) {
                 console.log('Ошибки в выгрузке', error);
             }
-        }; fetchPosts();
+        };
 
         const getUser = async () =>{
             try{
@@ -29,8 +30,19 @@ function PostList() {
             } catch (error) {
                 console.log(error);
             }
-        }; getUser();
+        };
+        fetchPosts();
+        getUser();
+
+        const timeoutId = window.setInterval(()=>{
+            fetchPosts();
+        }, 5000);
+        return () => {
+            window.clearInterval(timeoutId);
+        };
     }, []);
+
+
 
     const deletePost = async (id) => {
         try{
@@ -59,9 +71,10 @@ function PostList() {
     return (
         <div>
             <h1 className="mt-4">Список постов</h1>
+            <p>Количество постов: {posts.length}</p>
             <Link to='/newpost'>Добавить пост</Link>
             {userPost ? <div className="columns mt-4">
-                {userPost.map(post => (
+                {posts.map(post => (
                     <div className="column" key={post.id}>
                         <div className="card">
                             <div className="card-content">
