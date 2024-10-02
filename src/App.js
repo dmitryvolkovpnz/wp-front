@@ -16,7 +16,7 @@ function App() {
 
   return (
       <BrowserRouter>
-        {token ? <div className="App">
+        {token ? <div className="App container">
           <Header />
           <Routes>
             <Route path="/" element={<PostList/>}/>
