@@ -1,17 +1,14 @@
 import React, {useState} from 'react';
 import axios from "axios";
-import {Link} from "react-router-dom";
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [jwt, setJwt] = useState('');
     const [userData, setUserData] = useState(null);
     const [error, setError] = useState('');
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
         try {
             const response = await axios.post('http://newscrypt.online/wp-json/jwt-auth/v1/token', {
                 username: username,
@@ -19,17 +16,15 @@ function Login() {
             });
             const token = response.data.token;
             localStorage.setItem('token', token);
-
-            setJwt(token);
             setError('');
             console.log('JWT: ',token);
             await getUserData(token);
+            window.location.reload();
         } catch (err){
             console.log(err.response?.data);
             setError('Неверный логин или пароль');
         }
     };
-
 
     const getUserData = async (token) => {
         try {
@@ -39,6 +34,7 @@ function Login() {
                 }
             });
             setUserData(response.data);
+            localStorage.setItem('userName', response.data.name);
             console.log('user data: ',response.data);
         } catch (err) {
             console.log(err.response?.data);
@@ -48,7 +44,6 @@ function Login() {
     return (
         <div>
             <h1>Авторизация</h1>
-            <Link to='/newpost'>Добавить пост</Link>
             <form onSubmit={handleLogin}>
                 <div>
                     <label>Имя пользователя:</label>
@@ -69,13 +64,10 @@ function Login() {
                 <button type="submit">Войти</button>
             </form>
             {error && <p style={{ color: 'red'}}>{error}</p>}
-            {jwt && <p>Ваш токен: {jwt}</p>}
 
             {userData && (
                 <div>
                     <h2>Вы авторизованы</h2>
-                    <h4>Данные пользователя:</h4>
-                    <p>Имя: {userData.name}</p>
                 </div>
             )}
         </div>

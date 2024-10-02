@@ -4,6 +4,8 @@ import PostList from "./PostList";
 import PostDetail from "./PostDetail";
 import Login from "./Login";
 import NewPost from "./NewPost";
+import Footer from "./Footer";
+import Header from "./Header";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -14,16 +16,19 @@ function App() {
 
   return (
       <BrowserRouter>
-        <div className="App">
-          <h1>Список постов</h1>
+        {token ? <div className="App">
+          <Header />
           <Routes>
-            <Route path="/" element={<PostList />} />
-              <Route path="/login" element={<Login />} />
+            <Route path="/" element={<PostList/>}/>
+            <Route path="/login" element={<Login/>}/>
             <Route path="/newpost" element={<NewPost token={token}/>}/>
-            <Route path="/post/:id" element={<PostDetail />} />
+            <Route path="/post/:id" element={<PostDetail/>}/>
           </Routes>
-        </div>
-          </BrowserRouter>
+          <Footer/>
+        </div> : <div>
+          <Login/>
+        </div>}
+      </BrowserRouter>
   );
 }
 
