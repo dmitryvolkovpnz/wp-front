@@ -6,6 +6,7 @@ const Header = () => {
         localStorage.removeItem('userName');
         window.location.reload();
     }
+    const time = new Date().toLocaleDateString('ru-RU');
     return (
         <div>
             <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -22,6 +23,7 @@ const Header = () => {
 
                     </a>
                 </div>
+
                     <div className="navbar-end">
                         <div className="navbar-item">
                             <div className="buttons">
@@ -31,6 +33,7 @@ const Header = () => {
                         </div>
                     </div>
             </nav>
+            {time}
         </div>
     );
 };
