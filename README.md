@@ -1,1 +1,1 @@
-## Frontnd приложение на React.js работающее по RestApi с WP REST
+## Frontend приложение на React.js работающее по RestApi с WP REST
