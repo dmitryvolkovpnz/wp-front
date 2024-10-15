@@ -4,7 +4,7 @@ const Footer = () => {
     const userName = localStorage.getItem("userName");
     return (
         <div className="mt-4">
-            Вы авторизованы {userName}
+            Вы авторизованы {userName} сегодня
         </div>
     );
 };

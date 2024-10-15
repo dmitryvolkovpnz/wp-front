@@ -19,6 +19,8 @@ function PostList() {
             }
         };
 
+
+
         const getUser = async () =>{
             try{
                 const response = await axios.get(`http://newscrypt.online/wp-json/wp/v2/users/me`, {

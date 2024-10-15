@@ -1,12 +1,15 @@
 import React from 'react';
 
 const Header = () => {
+    const [timeAll, setTimeAll] = React.useState(new Date().toLocaleDateString('ru-RU'));
     const handleLogout = async () =>{
         localStorage.removeItem('token');
         localStorage.removeItem('userName');
         window.location.reload();
     }
     const time = new Date().toLocaleDateString('ru-RU');
+
+
     return (
         <div>
             <nav className="navbar" role="navigation" aria-label="main navigation">
